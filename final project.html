@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Student Registration Form new </title>
+    <title>Student Registration Form </title>
     <style>
           body {
-            background-image: url('https://s2.best-wallpaper.net/wallpaper/iphone/2011/Cute-little-girl-and-boy-child-students_iphone_320x480.jpg');
-            font-family: Arial, sans-serif;
-            margin:100 ;
+            background-image: url('https://www.findatopdoc.com/var/fatd/storage/images/_aliases/fb_thumb/parenting/classrooms-can-benefit-children-autism/3416337-1-eng-US/How-Integrated-Classrooms-Can-Benefit-Children-with-Autism.jpg');
+            font-family: Arial, Helvetica, sans-serif;  
             display: flex;
             justify-content:center;
             align-items: center;
-            min-height: 100vh;            
+            min-height: 100vh;   
+                    
         }
         form {
-            
+
             background-image: url(https://wallpapercave.com/wp/wp1838776.jpg);
             background-repeat: no-repeat;
             background-size:cover;
-            width:100%;
+            width:1120%;
             height:60vh;
             background-image: center;
             margin:1%;
-            padding: 1%;
-            box-shadow:0 0 10px rgba(0, 0, 0, 0.1);     
+            padding: 10%;
+               
         }
         label {
             display: -webkit-box;
@@ -34,60 +34,118 @@
         input[type="tel"],
         input[type="password"] {
             
-            padding: px;
-            margin-bottom:2px;
+            margin-bottom:10px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 10px;
             box-sizing: border-box;
+            width: 40%;
         }
         input[type="radio"] {
-            margin-right: 2px;
+            margin-right: 10px;
         }
         button {
             background-color: #4CAF50;
-            color: rgb(13, 13, 193);
-            padding: 5px ;
-            border: blueviolet;
-            border: radius 25cm ;
-            cursor: 70px; ;
-            width: 50%;
+            padding: 1% ;
+            border: radius 2cm ;
+            cursor: 75px; 
+            width: 30%;
+            text-transform: uppercase;
+            
         }
         button:hover {
             background-color: #45a049;
         }
         
-        
-    </style>
+         </style>
 </head>
 <body>
     <form>
+        <form id="Registrationform" on submit="return validateform()" action="./submit.html">
         <h2>Student Registration Form</h2>
         <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" required>
+        <input type="text" id="firstName" name="firstName" required minlength="2">
+        <div id="firstName error" class="error"></div>
 
         <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" required>
+        <input type="text" id="lastName" name="lastName" required minlength="2">
+         <i id="LastName error" class="error"></div>
 
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
+        <div id="emailerror" class="error"></div>
 
         <label for="phone">Phone:</label>
-        <input type="tel" id="phone" name="phone" required>
+        <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}">
+        <div id="phoneerror" class="error"></div>
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required minlength="6">
+         <div id="passworderror" class="error"></div>
 
         <label for="confirmPassword">Confirm Password:</label>
         <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6">
+        <div id="confirmpassworderror" class="error"></div>
 
         <label>Gender:</label>
         <input type="radio" id="male" name="gender" value="male"
         <label for="male">Male
         <input type="radio" id="female" name="gender" value="Female" >Female
         <label for="female"> </label><br><br>
+      
 
-
-        <button type="submit">Submit</button>
+        <button type="submit" >Submit</button>
     </form>
+</form>
+<script>
+    function validateForm() {
+      let isValid = true;
+
+      // Clear previous errors
+      document.querySelectorAll('.error').forEach(el => el.innerText = '');
+
+      const nameRegex = /^[A-Za-z]+$/;
+      const phoneRegex = /^[0-9]{10}$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (!nameRegex.test(firstName)) {
+        document.getElementById('firstNameError').innerText = 'First name must contain only letters.';
+        isValid = false;
+      }
+
+      if (!nameRegex.test(lastName)) {
+        document.getElementById('lastNameError').innerText = 'Last name must contain only letters.';
+        isValid = false;
+      }
+
+      if (!emailRegex.test(email)) {
+        document.getElementById('emailError').innerText = 'Enter a valid email address.';
+        isValid = false;
+      }
+
+      if (!phoneRegex.test(phone)) {
+        document.getElementById('phoneError').innerText = 'Phone number must be exactly 10 digits.';
+        isValid = false;
+      }
+
+      if (password.length < 6) {
+        document.getElementById('passwordError').innerText = 'Password must be at least 6 characters.';
+        isValid = false;
+      }
+
+      if (password !== confirmPassword) {
+        document.getElementById('confirmPasswordError').innerText = 'Passwords do not match.';
+        isValid = false;
+      }
+
+      return isValid;
+    }
+  </script>
 </body>
 </html>
