@@ -97,55 +97,61 @@
     </form>
 </form>
 <script>
-    function validateForm() {
-      let isValid = true;
-
-      // Clear previous errors
-      document.querySelectorAll('.error').forEach(el => el.innerText = '');
-
-      const nameRegex = /^[A-Za-z]+$/;
-      const phoneRegex = /^[0-9]{10}$/;
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-      const firstName = document.getElementById('firstName').value.trim();
-      const lastName = document.getElementById('lastName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
-
-      if (!nameRegex.test(firstName)) {
-        document.getElementById('firstNameError').innerText = 'First name must contain only letters.';
-        isValid = false;
+  function validateForm() {
+      let firstName = document.forms["registrationForm"]["firstName"].value.trim();
+      let lastName = document.forms["registrationForm"]["lastName"].value.trim();
+      let email = document.forms["registrationForm"]["email"].value.trim();
+      let phone = document.forms["registrationForm"]["phone"].value.trim();
+      let password = document.forms["registrationForm"]["password"].value;
+      let confirmPassword = document.forms["registrationForm"]["confirmPassword"].value;
+      let gender = document.forms["registrationForm"]["gender"].value;
+  
+      // Name validation - only letters
+      let namePattern = /^[A-Za-z]+$/;
+      if (!firstName.match(namePattern)) {
+          alert("First name must contain only letters");
+          return false;
       }
-
-      if (!nameRegex.test(lastName)) {
-        document.getElementById('lastNameError').innerText = 'Last name must contain only letters.';
-        isValid = false;
+      if (!lastName.match(namePattern)) {
+          alert("Last name must contain only letters");
+          return false;
       }
-
-      if (!emailRegex.test(email)) {
-        document.getElementById('emailError').innerText = 'Enter a valid email address.';
-        isValid = false;
+  
+      // Email format
+      let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!email.match(emailPattern)) {
+          alert("Please enter a valid email address");
+          return false;
       }
-
-      if (!phoneRegex.test(phone)) {
-        document.getElementById('phoneError').innerText = 'Phone number must be exactly 10 digits.';
-        isValid = false;
+  
+      // Phone number (10 digits only)
+      let phonePattern = /^\d{10}$/;
+      if (!phone.match(phonePattern)) {
+          alert("Phone number must be 10 digits");
+          return false;
       }
-
-      if (password.length < 6) {
-        document.getElementById('passwordError').innerText = 'Password must be at least 6 characters.';
-        isValid = false;
+  
+      // Password strength
+      let passwordPattern = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+      if (!password.match(passwordPattern)) {
+          alert("Password must be at least 8 characters long and include uppercase, lowercase, number, and special character");
+          return false;
       }
-
+  
+      // Confirm password
       if (password !== confirmPassword) {
-        document.getElementById('confirmPasswordError').innerText = 'Passwords do not match.';
-        isValid = false;
+          alert("Passwords do not match");
+          return false;
       }
-
-      return isValid;
-    }
+  
+      // Gender selection
+      if (gender === "") {
+          alert("Please select your gender");
+          return false;
+      }
+  
+      return true;
+  }
   </script>
 </body>
 </html>
