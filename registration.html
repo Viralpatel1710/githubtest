@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <style>
+        body {
+            background-image: url('https://www.findatopdoc.com/var/fatd/storage/images/_aliases/fb_thumb/parenting/classrooms-can-benefit-children-autism/3416337-1-eng-US/How-Integrated-Classrooms-Can-Benefit-Children-with-Autism.jpg');
+            background-size: cover;
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            background-image: url('https://wallpapercave.com/wp/wp1838776.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 80%;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"] {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            width: 100%;
+            padding: 8px;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .gender-group {
+            margin-bottom: 10px;
+        }
+
+        button, input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        button:hover, input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <form id="Registrationform" onsubmit="return validateForm(event)" action="./submit.html" method="post" novalidate>
+        <h2>Student Registration Form</h2>
+
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName"  ° minlength="2" aria-describedby="firstNameError">
+        <div id="firstNameError" class="error"></div>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName"    ° minlength="2" aria-describedby="lastNameError">
+        <div id="lastNameError" class="error"></div>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" ° aria-describedby="emailError">
+        <div id="emailError" class="error"></div>
+
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone"   ° pattern="[0-9]{10}" aria-describedby="phoneError">
+        <div id="phoneError" class="error"></div>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"    ° minlength="6" aria-describedby="passwordError">
+        <div id="passwordError" class="error"></div>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword"  ° minlength="6" aria-describedby="confirmPasswordError">
+        <div id="confirmPasswordError" class="error"></div>
+
+        <div class="gender-group">
+            <label>Gender:</label>
+            <input type="radio" id="male" name="gender" value="male"    ° aria-describedby="genderError">
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female">Female</label>
+            <div id="genderError" class="error"></div>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+            let isValid = true;
+
+            // Reset error messages
+            document.querySelectorAll('.error').forEach(error => {
+                error.textContent = '';
+                error.classList.remove('show');
+            });
+
+            // Get form values
+            const form = document.forms['Registrationform'];
+            const firstName = form['firstName'].value.trim();
+            const lastName = form['lastName'].value.trim();
+            const email = form['email'].value.trim();
+            const phone = form['phone'].value.trim();
+            const password = form['password'].value;
+            const confirmPassword = form['confirmPassword'].value;
+            const gender = form.querySelector('input[name="gender"]:checked');
+
+            // Patterns
+            const namePattern = /^[A-Za-z]+$/;
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/i;
+            const phonePattern = /^\d{10}$/;
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+
+            // First Name
+            if (!namePattern.test(firstName)) {
+                showError('firstNameError', 'First name must contain only letters');
+                isValid = false;
+            }
+
+            // Last Name
+            if (!namePattern.test(lastName)) {
+                showError('lastNameError', 'Last name must contain only letters');
+                isValid = false;
+            }
+
+            // Email
+            if (!emailPattern.test(email)) {
+                showError('emailError', 'Please enter a valid email address');
+                isValid = false;
+            }
+
+            // Phone
+            if (!phonePattern.test(phone)) {
+                showError('phoneError', 'Phone number must be 10 digits');
+                isValid = false;
+            }
+
+            // Password
+            if (!passwordPattern.test(password)) {
+                showError('passwordError', 'Password must be at least 8 characters with uppercase, lowercase, number, and special character');
+                isValid = false;
+            }
+
+            // Confirm Password
+            if (password !== confirmPassword) {
+                showError('confirmPasswordError', 'Passwords do not match');
+                isValid = false;
+            }
+
+            // Gender
+            if (!gender) {
+                showError('genderError', 'Please select your gender');
+                isValid = false;
+            }
+
+            if (isValid) {
+                // For demo, show success message; in production, submit the form
+                alert('Form submitted successfully!');
+                // form.submit(); // Uncomment to allow actual submission
+            }
+
+            return isValid;
+        }
+
+        function showError(id, message) {
+            const errorElement = document.getElementById(id);
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+    </script>
+</body>
+</html>
