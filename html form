@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+  <meta charset="UTF-8">
+    <title>Student Registration </title>
+    
+    <style>
+          body {
+            background-image: url('https://www.findatopdoc.com/var/fatd/storage/images/_aliases/fb_thumb/parenting/classrooms-can-benefit-children-autism/3416337-1-eng-US/How-Integrated-Classrooms-Can-Benefit-Children-with-Autism.jpg');
+            font-family: Arial, Helvetica, sans-serif;  
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            min-height: 100vh;   
+                    
+        }
+        form {
+
+            background-image: url(https://wallpapercave.com/wp/wp1838776.jpg);
+            background-repeat: no-repeat;
+            background-size:cover;
+            width:78%;
+            height:60vh;
+            background-position: center;
+            margin:1%;
+            padding: 10%;
+               
+        }
+        label {
+     display: block;
+      margin-top: 0%;
+      font-weight: bold;
+            
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"] {
+            
+            margin-bottom:10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-sizing: border-box;
+            width: 40%;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            padding: 1% ;
+            border-radius: 1px ;
+            cursor: pointer; 
+            width: 30%;
+            text-transform: uppercase;
+            
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        
+         </style>
+</head>
+<body>
+  <form id="student registrationform" onsubmit="return validateForm()" >
+    
+ <form id="Registrationform" on submit="return validateform()" action="./submit.html">
+        <h2>Student Registration Form</h2>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required minlength="2">
+        <div id="firstName error" class="error"></div>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required minlength="2">
+         <i id="LastName error" class="error"></div>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <div id="emailerror" class="error"></div>
+
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}">
+        <div id="phoneerror" class="error"></div>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required minlength="6">
+         <div id="passworderror" class="error"></div>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6">
+        <div id="confirmpassworderror" class="error"></div>
+
+        <label>Gender:</label>
+        <input type="radio" id="male" name="gender" value="male"
+        <label for="male">Male
+        <input type="radio" id="female" name="gender" value="Female" >Female
+        <label for="female"> </label><br><br>
+      
+
+        <button type="submit" >Submit</button>
+    </form>
+</form>
+<script>
+    function validateForm() {
+      let isValid = true;
+
+      // Clear previous errors
+      document.querySelectorAll('.error').forEach(el => el.innerText = '');
+
+      const nameRegex = /^[A-Za-z]+$/;
+      const phoneRegex = /^[0-9]{10}$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (!nameRegex.test(firstName)) {
+        document.getElementById('firstNameError').innerText = 'First name must contain only letters.';
+        isValid = false;
+      }
+
+      if (!nameRegex.test(lastName)) {
+        document.getElementById('lastNameError').innerText = 'Last name must contain only letters.';
+        isValid = false;
+      }
+
+      if (!emailRegex.test(email)) {
+        document.getElementById('emailError').innerText = 'Enter a valid email address.';
+        isValid = false;
+      }
+
+      if (!phoneRegex.test(phone)) {
+        document.getElementById('phoneError').innerText = 'Phone number must be exactly 10 digits.';
+        isValid = false;
+      }
+
+      if (password.length < 6) {
+        document.getElementById('passwordError').innerText = 'Password must be at least 6 characters.';
+        isValid = false;
+      }
+
+      if (password !== confirmPassword) {
+        document.getElementById('confirmPasswordError').innerText = 'Passwords do not match.';
+        isValid = false;
+      }
+
+      return isValid;
+    }
+  </script>
+</body>
+</html>
